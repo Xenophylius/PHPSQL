@@ -28,7 +28,9 @@
         <li class="nav-item mx-auto">
           <a class="nav-link" href="ajout-rendezvous.php">Ajouter un rendez-vous</a>
         </li>
-        
+        <li class="nav-item mx-auto">
+          <a class="nav-link" href="liste-rendezvous.php">Liste des rendez-vous</a>
+        </li>
       </ul>
     </div>
   </div>

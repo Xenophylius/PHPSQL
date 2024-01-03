@@ -1,19 +1,31 @@
 <?php session_start();
 
     require_once('connexion.php');
-
+    
+    
     // Ecriture de la requete
     $sqlQuery = 'INSERT INTO appointments (dateHour, idPatients) VALUES (:dateHour, :idPatients)';
-
+    $request =  $db->query('SELECT * FROM patients');
     // Préparation 
     $insertRecipe = $db->prepare($sqlQuery);
+    $user = $request->fetchAll();
+    
 
+    function dump($variable){
+        echo '<pre>';
+        print_r($variable);
+        echo '</pre>';
+       };
+
+       
+    
     if (isset($_POST['dateHour']) && 
     isset($_POST['idPatients'])) {
 
     $dateHour = htmlspecialchars($_POST['dateHour']);
     $idPatients = htmlspecialchars($_POST['idPatients']);
    
+    
 
 // Execution 
     $insertRecipe->execute([
@@ -41,14 +53,21 @@
 <body class="bg-dark ">
 
     <h1 class="text-success text-center">Ajoutez un rendez-vous</h1>
-  <div class="container w-75 text-light border border-info-emphasis">
+  <div class="container w-75 text-light border border-info-emphasis text-center">
     <form action="ajout-rendezvous.php" method="post" class="row g-3 needs-validation" novalidate>
     <div class="col-md-6 py-2">
-        <label for="idPatients" class="form-label">Séléctionner le patient</label>
-        <input type="text" class="form-control" name="idPatients" required>
+        <label for="idPatients" class="form-label">Séléctionner le patient</label><br>
+        <select name="idPatients">
+          <?php foreach($user as $key => $value){ ?>
+                
+                <option value="<?=$user[$key]['id']?>"><?=$user[$key]['lastname']?> <?=$user[$key]['firstname']?></option>
+                                            
+            <?php } ?>
+        </select>
         <div class="valid-feedback">
         Looks good!
         </div>
+
     </div>
     <div class="col-md-6 py-2">
         <label for="firstName" class="form-label">Séléctionner une date et une heure</label>
@@ -57,19 +76,7 @@
         Looks good!
         </div>
     </div>
-    
 
-    <div class="col-12 py-2">
-        <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-        <label class="form-check-label" for="invalidCheck">
-            Acceptez les conditions.
-        </label>
-        <div class="invalid-feedback">
-            Vous devez acceptez les conditions. 
-        </div>
-        </div>
-    </div>
     <div class="col-12">
         <button class="btn btn-success" type="submit">Envoyer</button>
     </div>
