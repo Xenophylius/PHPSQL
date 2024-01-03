@@ -51,7 +51,14 @@
 //    var_dump($ordreAlpha);
 //    echo '</pre>';
    
-//    ?>
+//    
 
-<a href="ajout-patient.php" class="">Cliquez ici pour ajouter un patient.</a><br>
-<a href="liste-patients.php" class="">Cliquez ici pour afficher la liste des patients.</a>
+include_once('navbar.php');
+
+?>
+
+<section class="container text-center mx-auto ">
+    <img class="w-50" src="./image/pngwing.com.png"></a>
+</section>
+
+

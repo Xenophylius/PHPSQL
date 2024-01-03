@@ -15,6 +15,7 @@
     echo '</pre>';
    };
 
+   include_once('navbar.php');
 ?>
 
 <!DOCTYPE html>

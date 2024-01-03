@@ -1,17 +1,14 @@
 <?php session_start();
 
     require_once('connexion.php');
-    $identifiant = $_GET['id'];
-    
-    // on commence par préparer la requète grace à query()
-    $request =  $db->query("SELECT * FROM patients WHERE id=$identifiant");
-    $user = $request->fetchAll();
-      
-    $sqlQuery2 = "UPDATE patients SET lastname=:lastName, firstname=:firstName, birthdate=:birthdate, phone=:phone, mail=:mail WHERE id=$identifiant";
-    $insertRecipe2 = $db->prepare($sqlQuery2);
 
-    // on récupère la réponse à la requète grâce à fetch(), car je n'ai qu'un seul user en BDD
-    $idmagic = $user[0]['id'];
+    // Ecriture de la requete
+    $sqlQuery = 'INSERT INTO patients (lastname, firstname, birthdate, phone, mail) VALUES (:lastName, :firstName, :birthdate, :phone, :mail)';
+
+    // Préparation 
+    $insertRecipe = $db->prepare($sqlQuery);
+
+    
 
    function dump($variable){
     echo '<pre>';
@@ -19,6 +16,8 @@
     echo '</pre>';
    };
 
+
+   
    if (isset($_POST['lastName']) && 
     isset($_POST['firstName']) && 
     isset($_POST['birthdate']) && 
@@ -31,17 +30,21 @@
     $phone = htmlspecialchars($_POST['phone']);
     $mail = htmlspecialchars($_POST['mail']);
 
-   $insertRecipe2->execute([
+// Execution 
+    $insertRecipe->execute([
     ':lastName' => $lastName,
     ':firstName' => $firstName,
     ':birthdate' => $birthdate,
     ':phone' => $phone,
     ':mail' => $mail,
 ]);
+    include_once('navbar.php');
+    echo '<p class="alert alert-success text-center">Vous avez ajouté un patient</p><br>';
+    echo '<a href="liste-patients.php">Cliquez pour aller vers la liste des patients</a>';
 
-    echo '<p>Vous avez modifié un patient</p>';
-    echo "<li><a href='profil-patient.php?id={$identifiant}'>Retour vers la page du patient</a></li>";
     } else {
+
+    include_once('navbar.php');
 ?>
 
 <!DOCTYPE html>
@@ -49,28 +52,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil du patient</title>
+    <title>Ajout patient</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
-<body class="bg-dark text-light">
+<body class="bg-dark ">
 
-<h1 class="text-success text-center">Profil du patient</h1>
-   <div class="container w-75 text-light border border-info-emphasis">
-    
-   <?php
-        echo '<div class="text-center my-5">';
-        echo 'Nom : ' . $user[0]['lastname'] . '<br>';
-        echo 'Prénom : ' . $user[0]['firstname'] . '<br>';
-        echo 'Date de naissance : ' . $user[0]['birthdate'] . '<br>';
-        echo 'Téléphone : ' . $user[0]['phone'] . '<br>';
-        echo 'Mail : ' . $user[0]['mail'] . '<br>';
-        echo '</div>';
-   ?>
-   
-   <div class="container container w-75 text-light">
-        <h2 class="text-center">Modifier les informations du patient</h2><br>
-
-        <form action="profil-patient.php?id=<?php echo $identifiant ?>" method="post" class="row g-3 needs-validation" novalidate>
+    <h1 class="text-success text-center">Ajoutez un patient</h1>
+  <div class="container w-75 text-light border border-info-emphasis">
+    <form action="ajout-patient.php" method="post" class="row g-3 needs-validation" novalidate>
     <div class="col-md-6 py-2">
         <label for="lastName" class="form-label">Nom</label>
         <input type="text" class="form-control" name="lastName" required>
@@ -123,12 +112,10 @@
     <div class="col-12">
         <button class="btn btn-success" type="submit">Envoyer</button>
     </div>
-</form>
+    </form>
+</div>  
 
-   </div>
-</div>
 <?php } ?>
-
 <script>
 
 (() => {
