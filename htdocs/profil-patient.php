@@ -36,7 +36,7 @@
 ]);
 include_once('navbar.php');
     echo '<p class="alert alert-success text-center">Vous avez modifié un patient</p>';
-    echo "<li><a href='profil-patient.php?id={$identifiant}'>Retour vers la page du patient</a></li>";
+    echo "<li><a class='btn btn-secondary' href='profil-patient.php?id={$identifiant}'>Retour vers la page du patient</a></li>";
     } else {
         include_once('navbar.php');
 ?>
@@ -51,10 +51,10 @@ include_once('navbar.php');
 </head>
 <body class="bg-dark text-light">
 
-<h1 class="text-success text-center">Profil du patient</h1>
+<h1 class="text-success text-center my-4">Profil du patient</h1>
 
-   <div class="container w-75 text-light text-center">
-   <div class="d-flex">
+   <div class="d-flex text-light text-center justify-content-center ">
+   <div class="d-flex justify-content-center">
         <div class="card text-center bg-dark text-light mx-auto" style="width: 18rem;">
         <div class="card-body text-center">
             <h5 class="card-title text-success">Informations du patient</h5>
@@ -68,11 +68,12 @@ include_once('navbar.php');
                 echo '</div>';
             ?>
         </div>
-    </div>
+    </div></div>
     <?php 
     foreach ($user2 as $key => $value) {
         if ($identifiant == $user2[$key]['idPatients']) { 
     ?>
+<div class="d-flex">
 <div class="card text-center bg-dark text-light mx-auto" style="width: 18rem;">
         <div class="card-body text-center mx-auto">
         <h5 class="card-title text-success">Rendez-vous du patient</h5>
@@ -81,19 +82,20 @@ include_once('navbar.php');
                 echo 'Nom : ' . $user2[$key]['lastname'] . '<br>';
                 echo 'Prénom : ' . $user2[$key]['firstname'] . '<br>';
                 echo 'Date du rendez-vous : ' . $user2[$key]['dateHour'] . '<br>';
-                echo "<a href='rendezvous.php?id=$identifiant'> En savoir plus</a>"  . '<br>';
+                echo "<a class='btn btn-secondary' href='rendezvous.php?id=$identifiant'> En savoir plus</a>"  . '<br>';
                 echo '</div>';
                 
             ?>
         </div>
         </div>
         </div>
-      
+        
         
         
     <?php } }
-   ?> 
+   ?> </div>
    <div class="container container w-75 text-light">
+    <div class="card text-center bg-dark text-light mx-auto">
         <h2 class="text-center text-success">Modifier les informations du patient</h2><br>
 
         <form action="profil-patient.php?id=<?php echo $identifiant ?>" method="post" class="row g-3 needs-validation" novalidate>
@@ -140,7 +142,7 @@ include_once('navbar.php');
         <button class="btn btn-success" type="submit">Envoyer</button>
     </div>
 </form>
-
+        
    </div>
 </div>
 <?php } ?>

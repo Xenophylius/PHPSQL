@@ -42,7 +42,7 @@
 ]);
     include_once('navbar.php');
     echo '<p class="alert alert-success text-center">Vous avez ajouté un patient et un rendez-vous</p><br>';
-    echo '<a href="liste-patients.php">Cliquez pour aller vers la liste des patients</a>';
+    echo '<a class="btn btn-secondary" href="liste-patients.php">Cliquez pour aller vers la liste des patients</a>';
 
     } else {
 

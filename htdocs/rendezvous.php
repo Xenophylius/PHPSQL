@@ -46,7 +46,7 @@ $insertRecipe3->execute([
 
 include_once('navbar.php');
    echo '<p class="alert alert-success text-center">Vous avez modifié un rendez-vous</p>';
-   echo "<li><a href='rendezvous.php?id={$identifiant}'>Retour vers la page du rendez-vous</a></li>";
+   echo "<li><a class='btn btn-secondary' href='rendezvous.php?id={$identifiant}'>Retour vers la page du rendez-vous</a></li>";
    } else {
        include_once('navbar.php');
 ?>
@@ -63,15 +63,18 @@ include_once('navbar.php');
 
 <h1 class="text-success text-center">Détail du rendez-vous</h1>
    <div class="container w-75 text-light my-5">
-    
+   <div class="text-center bg-dark text-light" >
+   <h5 class="text-success border-none">Informations des rendez-vous</h5>
+   <div class="d-flex text-center flex-row justify-content-evenly">
+   
     <?php
         
         foreach ($user as $key => $value) {
             if ($identifiant == $user[$key]['id']) { ?>
 
-<div class="card text-center bg-dark text-light mx-auto" >
-        <div class="card-body text-center">
-            <h5 class="card-title text-success">Informations du patient</h5>
+
+        
+            
             <?php
                 echo '<div class="text-center my-5">';
                 echo 'Nom : ' . $user[$key]['lastname'] . '<br>';
@@ -82,15 +85,17 @@ include_once('navbar.php');
                 echo 'Date du rendez-vous : ' . $user[$key]['dateHour'] . '<br>';
                 echo '</div>';
             ?>
-        </div>
+        
     
                 
             <?php } ?>
             <?php } ?>
     
-
-    <a href="liste-rendezvous.php">Liste des rendez-vous.</a>
+            </div>
+    <a href="liste-rendezvous.php" class="btn btn-success">Liste des rendez-vous.</a>
 </div>
+</div>
+
 
 <div class="container container w-75 text-light">
         <h2 class="text-center text-success">Modifier les informations du rendez-vous</h2><br>

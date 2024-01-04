@@ -37,7 +37,7 @@
 
   while($terme_trouve = $select_terme->fetch())
     {
-        echo "<div class='text-center my-2 text-light'><h1>".$terme_trouve['lastname'].' '.$terme_trouve['firstname']."</h1><br>";?>
+        echo "<div class='text-center my-5 text-light'><h1>".$terme_trouve['lastname'].' '.$terme_trouve['firstname']."</h1><br>";?>
         <form action="liste-patients.php?id=<?php echo $identifiant ?>" method="post" class="row g-3 needs-validation" novalidate>
             <div class="col-12 my-2">
             <button class="btn btn-danger my-1" type="submit">Supprimer ce patient</button>

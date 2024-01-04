@@ -44,15 +44,15 @@
                 echo 'Nom : ' . $user[$key]['lastname'] . '<br>';
                 echo 'Prénom : ' . $user[$key]['firstname'] . '<br>';
                 echo 'Date du rendez-vous : ' . $user[$key]['dateHour'] . '<br>';
-                echo "<a href='rendezvous.php?id=$identifiant'> En savoir plus</a>"  . '<br>';?>
+                echo "<div class='d-flex justify-content-center py-3'><a class='btn btn-secondary mx-3' href='rendezvous.php?id=$identifiant'> En savoir plus</a>";?>
 
                     <form action="liste-rendezvous.php?id=<?php echo $identifiant ?>" method="post" class="row g-3 needs-validation" novalidate>
-                    <div class="col-12">
-                    <button class="btn btn-success" type="submit">Supprimer ce rendez-vous</button>
-    </div>
-</form>
+                        <div class="col-12">
+                            <button class="btn btn-success" type="submit">Supprimer ce rendez-vous</button>
+                        </div>
+                    </form>
                 <?php
-                echo '</div>';
+                echo '</div></div>';
                 
             ?>
         </div>
@@ -62,7 +62,7 @@
         
         
     <?php }
-   ?> <a href="ajout-rendezvous.php">Créer un rendez-vous.</a></div>
+   ?> <a class="btn btn-secondary" href="ajout-rendezvous.php">Créer un rendez-vous.</a></div>
 
     
 </div>

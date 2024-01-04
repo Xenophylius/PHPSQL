@@ -26,7 +26,7 @@
 ]);
     include_once('navbar.php');
     echo '<p class="alert alert-success text-center">Vous avez ajouté un rendez-vous</p><br>';
-    echo '<a href="liste-rendezvous.php">Cliquez pour aller vers la liste des rendez-vous</a>';
+    echo '<div class="text-center mx-auto"><a class="btn btn-primary" href="liste-rendezvous.php">Cliquez pour aller vers la liste des rendez-vous</a></div>';
 
     } else {
 
