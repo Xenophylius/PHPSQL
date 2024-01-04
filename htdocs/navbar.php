@@ -31,6 +31,9 @@
         <li class="nav-item mx-auto">
           <a class="nav-link" href="liste-rendezvous.php">Liste des rendez-vous</a>
         </li>
+        <li class="nav-item mx-auto">
+          <a class="nav-link" href="ajout-patient-rendez-vous.php">Ajouter un patient et un rendez-vous</a>
+        </li>
       </ul>
     </div>
   </div>

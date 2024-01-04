@@ -10,20 +10,11 @@
     
     }
     // on commence par préparer la requète grace à query()
-    $request =  $db->query('SELECT * FROM appointments INNER JOIN patients ON appointments.idPatients = patients.id');
+    $request =  $db->query('SELECT * FROM appointments INNER JOIN patients ON appointments.idPatients = patients.id ORDER BY dateHour');
     
 
     // on récupère la réponse à la requète grâce à fetch(), car je n'ai qu'un seul user en BDD
     $user = $request->fetchAll();
-    
-    
-
-   function dump($variable){
-    echo '<pre>';
-    print_r($variable);
-    echo '</pre>';
-   };
-
 
 
    include_once('navbar.php');
@@ -40,7 +31,7 @@
 <body class="bg-dark text-light">
 
 <h1 class="text-success text-center">Liste des rendez-vous</h1>
-   <div class="container w-75 text-light border border-info-emphasis my-5 text-center">
+   <div class="container w-75 text-light my-5 text-center">
     
    <?php 
     foreach ($user as $key => $value) {

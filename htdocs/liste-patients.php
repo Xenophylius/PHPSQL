@@ -14,17 +14,11 @@
         
         }
     // on commence par préparer la requète grace à query()
-    $request =  $db->query('SELECT * FROM patients');
+    $request =  $db->query('SELECT * FROM patients ORDER BY lastname');
 
     // on récupère la réponse à la requète grâce à fetch(), car je n'ai qu'un seul user en BDD
     $user = $request->fetchAll();
-       
-
-   function dump($variable){
-    echo '<pre>';
-    print_r($variable);
-    echo '</pre>';
-   };
+    
 
    include_once('navbar.php');
 ?>
@@ -38,8 +32,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <body class="bg-dark text-light">
-
-<h1 class="text-success text-center">Liste des patients</h1>
+<div class="d-flex align-items-center justify-content-evenly my-5">
+<h1 class="text-success text-center">Liste des patients</h1> 
+<form action = "search-patient.php " method = "get">
+   <input type = "search" name = "terme" placeholder="Nom du patient...">
+   <input type = "submit" name = "s" value = "Rechercher">
+</form>
+  </div>
    <div class="container w-75 text-light  my-5">
     
 <div class="card text-center bg-dark text-light mx-auto" >
@@ -51,10 +50,13 @@
          echo "<li class='border border-bottom border-light'>$transi</li><br>"; ?>
             <form action="liste-patients.php?id=<?php echo $identifiant ?>" method="post" class="row g-3 needs-validation" novalidate>
             <div class="col-12 my-2">
-            <button class="btn btn-success my-1" type="submit">Supprimer ce patient</button>
+            <button class="btn btn-danger my-1" type="submit">Supprimer ce patient</button>
             </form>
             <form action="profil-patient.php?id=<?php echo $user[$key]['id'] ?>" method="post" class="needs-validation d-inline" novalidate>
-            <button class="btn btn-primary" type="submit">Détail fiche patient</button>
+            <button class="btn btn-success" type="submit">Détail fiche patient</button>
+            </form>
+            <form action="profil-patient.php?id=<?php echo $user[$key]['id'] ?>" method="post" class="needs-validation d-inline" novalidate>
+            <button class="btn btn-primary" type="submit">Modifier fiche patient</button>
             </form>
             <?php echo '</div>'; } ?>
     </div>

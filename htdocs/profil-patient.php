@@ -5,7 +5,7 @@
     
     // on commence par préparer la requète grace à query()
     $request =  $db->query("SELECT * FROM patients WHERE id=$identifiant");
-    $user = $request->fetchAll();
+    $user = $request->fetch();
     
     $request2 =  $db->query('SELECT * FROM appointments INNER JOIN patients ON appointments.idPatients = patients.id');
     $user2 = $request2->fetchAll();
@@ -13,16 +13,7 @@
 
     $sqlQuery2 = "UPDATE patients SET lastname=:lastName, firstname=:firstName, birthdate=:birthdate, phone=:phone, mail=:mail WHERE id=$identifiant";
     $insertRecipe2 = $db->prepare($sqlQuery2);
-
-    
-
-   function dump($variable){
-    echo '<pre>';
-    print_r($variable);
-    echo '</pre>';
-   };
-
-   
+  
    
    if (isset($_POST['lastName']) && 
     isset($_POST['firstName']) && 
@@ -61,17 +52,19 @@ include_once('navbar.php');
 <body class="bg-dark text-light">
 
 <h1 class="text-success text-center">Profil du patient</h1>
-   <div class="container w-75 text-light border border-info-emphasis text-center">
+
+   <div class="container w-75 text-light text-center">
+   <div class="d-flex">
         <div class="card text-center bg-dark text-light mx-auto" style="width: 18rem;">
         <div class="card-body text-center">
             <h5 class="card-title text-success">Informations du patient</h5>
             <?php
                 echo '<div class="text-center my-5">';
-                echo 'Nom : ' . $user[0]['lastname'] . '<br>';
-                echo 'Prénom : ' . $user[0]['firstname'] . '<br>';
-                echo 'Date de naissance : ' . $user[0]['birthdate'] . '<br>';
-                echo 'Téléphone : ' . $user[0]['phone'] . '<br>';
-                echo 'Mail : ' . $user[0]['mail'] . '<br>';
+                echo 'Nom : ' . $user['lastname'] . '<br>';
+                echo 'Prénom : ' . $user['firstname'] . '<br>';
+                echo 'Date de naissance : ' . $user['birthdate'] . '<br>';
+                echo 'Téléphone : ' . $user['phone'] . '<br>';
+                echo 'Mail : ' . $user['mail'] . '<br>';
                 echo '</div>';
             ?>
         </div>
@@ -80,7 +73,7 @@ include_once('navbar.php');
     foreach ($user2 as $key => $value) {
         if ($identifiant == $user2[$key]['idPatients']) { 
     ?>
-<div class="card text-center bg-dark text-light mx-auto" >
+<div class="card text-center bg-dark text-light mx-auto" style="width: 18rem;">
         <div class="card-body text-center mx-auto">
         <h5 class="card-title text-success">Rendez-vous du patient</h5>
             <?php
@@ -93,9 +86,9 @@ include_once('navbar.php');
                 
             ?>
         </div>
-        
         </div>
-        
+        </div>
+      
         
         
     <?php } }
@@ -106,14 +99,14 @@ include_once('navbar.php');
         <form action="profil-patient.php?id=<?php echo $identifiant ?>" method="post" class="row g-3 needs-validation" novalidate>
     <div class="col-md-6 py-2">
         <label for="lastName" class="form-label">Nom</label>
-        <input type="text" class="form-control" name="lastName"  required>
+        <input type="text" class="form-control" name="lastName"  value="<?= $user['lastname'] ?>" required>
         <div class="valid-feedback">
         Looks good!
         </div>
     </div>
     <div class="col-md-6 py-2">
         <label for="firstName" class="form-label">Prénom</label>
-        <input type="text" class="form-control" name="firstName"   required>
+        <input type="text" class="form-control" name="firstName" value="<?= $user['firstname'] ?>"  required>
         <div class="valid-feedback">
         Looks good!
         </div>
@@ -121,14 +114,14 @@ include_once('navbar.php');
     
     <div class="col-md-12 py-2">
         <label for="birthdate" class="form-label">Date de naissance</label>
-        <input type="date" class="form-control" name="birthdate"  required>
+        <input type="date" class="form-control" name="birthdate" value="<?= $user['birthdate'] ?>" required>
         <div class="invalid-feedback">
         Entrez votre date de naissance. 
         </div>
     </div>
     <div class="col-md-12 py-2">
         <label for="phone" class="form-label">Téléphone</label>
-        <input type="tel" class="form-control" name="phone"  required>
+        <input type="tel" class="form-control" name="phone" value="<?= $user['phone'] ?>" required>
         <div class="invalid-feedback">
         Entrez votre numéro de téléphone.
         </div>
@@ -136,7 +129,7 @@ include_once('navbar.php');
     
     <div class="col-md-12 py-2">
         <label for="mail" class="form-label">E-mail</label>
-        <input type="email" class="form-control" name="mail"  required>
+        <input type="email" class="form-control" name="mail" value="<?= $user['mail'] ?>" required>
         <div class="invalid-feedback">
         Entrez votre e-mail. 
         </div>

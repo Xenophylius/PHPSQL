@@ -17,11 +17,7 @@
     $sqlQuery3 = "UPDATE appointments SET dateHour=:dateHour WHERE idPatients=$identifiant";
     $insertRecipe3 = $db->prepare($sqlQuery3);
 
-   function dump($variable){
-    echo '<pre>';
-    print_r($variable);
-    echo '</pre>';
-   };
+
    if (isset($_POST['lastName']) && 
    isset($_POST['firstName']) && 
    isset($_POST['birthdate']) && 
@@ -66,7 +62,7 @@ include_once('navbar.php');
 <body class="bg-dark text-light">
 
 <h1 class="text-success text-center">Détail du rendez-vous</h1>
-   <div class="container w-75 text-light border border-info-emphasis my-5">
+   <div class="container w-75 text-light my-5">
     
     <?php
         
