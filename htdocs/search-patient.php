@@ -26,17 +26,20 @@
  $terme = trim($terme); 
  $terme = strip_tags($terme);
 
- if (isset($terme))
- {
+ if (empty($terme)) {
+    echo '<p class="alert alert-danger text-center">Aucun patient trouvé. Veuillez vérifier le nom.</p><br>';
+    exit;
+ } else {
   $terme = strtolower($terme);
-  $select_terme = $db->prepare("SELECT * FROM patients WHERE lastname=:lastname");
+  $select_terme = $db->prepare("SELECT * FROM patients WHERE lastname=?");
   $select_terme->execute([
-    ":lastname"=>$terme,
+    $terme,
   ]);
 
 
   while($terme_trouve = $select_terme->fetch())
-    {
+  { 
+        
         echo "<div class='text-center my-5 text-light'><h1>".$terme_trouve['lastname'].' '.$terme_trouve['firstname']."</h1><br>";?>
         <form action="liste-patients.php?id=<?php echo $identifiant ?>" method="post" class="row g-3 needs-validation" novalidate>
             <div class="col-12 my-2">
@@ -53,14 +56,9 @@
                     <button class="btn btn-secondary" type="submit">retour vers la liste des patients</button>
                 </form>
             </div>
-            <?php echo '</div>'; } $select_terme->closeCursor();
-    } 
-
- else
- {
-  $message = "<p class='alert alert-danger'>Vous devez entrer votre requete dans la barre de recherche </p>";
- }
-}
+            <?php echo '</div>';  }  }
+    
+        }
 
 ?>
 
