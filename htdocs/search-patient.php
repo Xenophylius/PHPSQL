@@ -27,15 +27,17 @@
  $terme = strip_tags($terme);
 
  if (empty($terme)) {
-    echo '<p class="alert alert-danger text-center">Aucun patient trouvé. Veuillez vérifier le nom.</p><br>';
+    echo '<p class="alert alert-danger text-center">Aucun patient trouvé. Veuillez saisir le nom.</p><br>';
     exit;
  } else {
   $terme = strtolower($terme);
-  $select_terme = $db->prepare("SELECT * FROM patients WHERE lastname=?");
-  $select_terme->execute([
-    $terme,
-  ]);
+  $select_terme = $db->prepare("SELECT * FROM patients WHERE lastname LIKE '%{$terme}%'");
+  $select_terme->execute();
+  $num_of_rows = $select_terme->rowCount() ;
 
+  if ($num_of_rows == 0) {
+    echo '<p class="alert alert-danger text-center">Aucun patient trouvé. Veuillez vérifier le nom.</p><br>';
+  } else {
 
   while($terme_trouve = $select_terme->fetch())
   { 
@@ -56,7 +58,7 @@
                     <button class="btn btn-secondary" type="submit">retour vers la liste des patients</button>
                 </form>
             </div>
-            <?php echo '</div>';  }  }
+            <?php echo '</div>';  } }  }
     
         }
 
