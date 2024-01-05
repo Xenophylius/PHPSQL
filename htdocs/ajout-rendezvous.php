@@ -10,8 +10,8 @@
     $insertRecipe = $db->prepare($sqlQuery);
     $user = $request->fetchAll(); 
     
-    if (isset($_POST['dateHour']) && 
-    isset($_POST['idPatients'])) {
+    if (!empty($_POST['dateHour']) && 
+    !empty($_POST['idPatients'])) {
 
     $dateHour = htmlspecialchars($_POST['dateHour']);
     $idPatients = htmlspecialchars($_POST['idPatients']);

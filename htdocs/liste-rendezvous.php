@@ -3,20 +3,20 @@
     require_once('connexion.php');
     if (isset($_GET['id'])) {
     $identifiant = $_GET['id'];
-    $delete =  $db->query("DELETE FROM appointments WHERE idPatients=$identifiant");
-    $userApp = $delete->fetch();
+    $delete =  $db->query("DELETE FROM appointments WHERE id={$_GET['id']}");
+    
     
     echo '<p class="alert alert-success text-center">Vous avez supprimé le rendez-vous</p>';
     
     }
     // on commence par préparer la requète grace à query()
-    $request =  $db->query('SELECT * FROM appointments INNER JOIN patients ON appointments.idPatients = patients.id ORDER BY dateHour');
+    $request =  $db->query('SELECT appointments.id AS appointment_id, appointments.dateHour, patients.* FROM appointments INNER JOIN patients ON appointments.idPatients = patients.id ORDER BY dateHour');
     
 
     // on récupère la réponse à la requète grâce à fetch(), car je n'ai qu'un seul user en BDD
     $user = $request->fetchAll();
 
-
+   
    include_once('navbar.php');
 ?>
 
@@ -35,7 +35,8 @@
     
    <?php 
     foreach ($user as $key => $value) {
-        $identifiant = $user[$key]['idPatients']; 
+        $identifiant = $user[$key]['id']; 
+        
     ?>
 <div class="card text-center bg-dark text-light mx-auto" >
         <div class="card-body text-center">
@@ -46,12 +47,15 @@
                 echo 'Date du rendez-vous : ' . $user[$key]['dateHour'] . '<br>';
                 echo "<div class='d-flex justify-content-center py-3'><a class='btn btn-secondary mx-3' href='rendezvous.php?id=$identifiant'> En savoir plus</a>";?>
 
-                    <form action="liste-rendezvous.php?id=<?php echo $identifiant ?>" method="post" class="row g-3 needs-validation" novalidate>
+                    <form action="liste-rendezvous.php?id=<?php echo $user[$key]['appointment_id'] ?>" method="post" class="row g-3 needs-validation" novalidate>
                         <div class="col-12">
                             <button class="btn btn-success" type="submit">Supprimer ce rendez-vous</button>
+                            
                         </div>
                     </form>
-                <?php
+                <?php 
+                
+
                 echo '</div></div>';
                 
             ?>

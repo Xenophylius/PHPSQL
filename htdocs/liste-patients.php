@@ -1,8 +1,8 @@
 <?php session_start();
 
     require_once('connexion.php');
-    if (isset($_GET['id'])) {
-        $identifiant = $_GET['id'];
+    if (!empty($_POST['idDelete'])) {
+        $identifiant = $_POST['idDelete'];
         $sqlQuery3 = "DELETE FROM appointments WHERE idPatients=$identifiant";
         $insertRecipe3 = $db->prepare($sqlQuery3);
         $insertRecipe3->execute();
@@ -48,8 +48,9 @@
         echo '<div class="text-center my-2 ">';
          $transi = $user[$key]['lastname'] . ' ' . $user[$key]['firstname'] .'<br>' ;
          echo "<li class='border border-bottom border-light'>$transi</li><br>"; ?>
-            <form action="liste-patients.php?id=<?php echo $identifiant ?>" method="post" class="row g-3 needs-validation" novalidate>
+            <form action="liste-patients.php" method="post" class="row g-3 needs-validation" novalidate>
             <div class="col-12 my-2">
+            <input type="hidden" name="idDelete" value="<?php echo $identifiant ?>">
             <button class="btn btn-danger my-1" type="submit">Supprimer ce patient</button>
             </form>
             <form action="profil-patient.php?id=<?php echo $user[$key]['id'] ?>" method="post" class="needs-validation d-inline" novalidate>

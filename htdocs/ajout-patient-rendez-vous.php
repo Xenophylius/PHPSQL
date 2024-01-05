@@ -8,12 +8,12 @@
     $sqlQuery2 = 'INSERT INTO appointments (dateHour, idPatients) VALUES (:dateHour, :idPatients)';
     $insertRecipe2 = $db->prepare($sqlQuery2);
 
-    if (isset($_POST['lastName']) && 
-    isset($_POST['firstName']) && 
-    isset($_POST['birthdate']) && 
-    isset($_POST['phone']) && 
-    isset($_POST['mail']) &&
-    isset($_POST['dateHour'])   
+    if (!empty($_POST['lastName']) && 
+    !empty($_POST['firstName']) && 
+    !empty($_POST['birthdate']) && 
+    !empty($_POST['phone']) && 
+    !empty($_POST['mail']) &&
+    !empty($_POST['dateHour'])   
     )
     {
 
@@ -24,7 +24,29 @@
     $mail = htmlspecialchars($_POST['mail']);
     $dateHour = htmlspecialchars($_POST['dateHour']);
     
+// Vérification que le mail et le phone sont correct
+    if (!filter_var($mail, FILTER_VALIDATE_EMAIL) || (!preg_match('/^[0-9]{10}+$/', $phone))) {
+        include_once('navbar.php');
+        echo '<p class="alert alert-danger text-center">Veuillez saisir une adresse mail et/ou un numéro de téléphone correct.</p><br>';
+        echo '<a class="btn btn-secondary" href="ajout-patient.php">Cliquez pour ajouter un patient</a>';
+        
+    } else {
 
+// Vérification si Mail existe déjà
+    $verifMail = $db->prepare("SELECT * FROM patients WHERE mail=?");
+    $verifMail->execute([$mail]);
+    $approuveMail = $verifMail->fetch();
+
+// Vérification si phone existe déjà
+    $verifPhone = $db->prepare("SELECT * FROM patients WHERE phone=?");
+    $verifPhone->execute([$phone]);
+    $approuvePhone = $verifPhone->fetch();
+
+    if ($approuveMail || $approuvePhone) {
+        include_once('navbar.php');
+        echo '<p class="alert alert-danger text-center">Un patient existe déjà avec cette adresse mail et/ou ce numéro de téléphone.</p><br>';
+        echo '<a class="btn btn-secondary" href="ajout-patient.php">Cliquez pour ajouter un patient</a>';
+    } else {
 // Execution 
     $insertRecipe->execute([
     ':lastName' => $lastName,
@@ -44,7 +66,7 @@
     echo '<p class="alert alert-success text-center">Vous avez ajouté un patient et un rendez-vous</p><br>';
     echo '<a class="btn btn-secondary" href="liste-patients.php">Cliquez pour aller vers la liste des patients</a>';
 
-    } else {
+    } } } else {
 
     include_once('navbar.php');
     

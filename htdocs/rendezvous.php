@@ -18,12 +18,12 @@
     $insertRecipe3 = $db->prepare($sqlQuery3);
 
 
-   if (isset($_POST['lastName']) && 
-   isset($_POST['firstName']) && 
-   isset($_POST['birthdate']) && 
-   isset($_POST['phone']) && 
-   isset($_POST['mail']) && 
-   isset($_POST['dateHour'])) {
+   if (!empty($_POST['lastName']) && 
+   !empty($_POST['firstName']) && 
+   !empty($_POST['birthdate']) && 
+   !empty($_POST['phone']) && 
+   !empty($_POST['mail']) && 
+   !empty($_POST['dateHour'])) {
 
    $lastName = htmlspecialchars($_POST['lastName']);
    $firstName = htmlspecialchars($_POST['firstName']);
